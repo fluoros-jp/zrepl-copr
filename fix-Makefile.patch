@@ -1,0 +1,49 @@
+--- Makefile.bak	2025-05-02 18:22:19.244747068 +0900
++++ Makefile	2025-05-02 21:28:54.708443210 +0900
+@@ -23,7 +23,7 @@
+ GOHOSTOS ?= $(shell bash -c 'source <($(GO) env) && echo "$$GOHOSTOS"')
+ GOHOSTARCH ?= $(shell bash -c 'source <($(GO) env) && echo "$$GOHOSTARCH"')
+ GO_ENV_VARS := CGO_ENABLED=0
+-GO_LDFLAGS := "-X github.com/zrepl/zrepl/version.zreplVersion=$(_ZREPL_VERSION)"
++GO_LDFLAGS := "-s -w -X github.com/dsh2dsh/zrepl/internal/version.zreplVersion=$(_ZREPL_VERSION)"
+ GO_MOD_READONLY := -mod=readonly
+ GO_EXTRA_BUILDFLAGS :=
+ GO_BUILDFLAGS := $(GO_MOD_READONLY) $(GO_EXTRA_BUILDFLAGS)
+@@ -213,7 +213,7 @@
+ 		--armor \
+ 		--detach-sign $(ARTIFACTDIR)/release/sha512sum.txt
+ 
+-clean: docs-clean
++clean: 
+ 	rm -rf "$(ARTIFACTDIR)"
+ 
+ download-circleci-release:
+@@ -263,7 +263,7 @@
+ endif
+ 
+ zrepl-bin:
+-	$(GO_BUILD) -o "$(ARTIFACTDIR)/zrepl-$(ZREPL_TARGET_TUPLE)"
++	$(GO_BUILD) -o "$(ARTIFACTDIR)/zrepl"
+ 
+ COVER_PLATFORM_BIN_PATH := $(ARTIFACTDIR)/platformtest-cover-$(ZREPL_TARGET_TUPLE)
+ cover-platform-bin:
+@@ -358,16 +358,16 @@
+ $(ARTIFACTDIR)/docs: $(ARTIFACTDIR)
+ 	mkdir -p "$@"
+ 
+-noarch: $(ARTIFACTDIR)/bash_completion $(ARTIFACTDIR)/_zrepl.zsh_completion $(ARTIFACTDIR)/go_env.txt docs
++noarch: $(ARTIFACTDIR)/bash_completion $(ARTIFACTDIR)/_zrepl.zsh_completion $(ARTIFACTDIR)/go_env.txt 
+ 	# pass
+ 
+ $(ARTIFACTDIR)/bash_completion:
+ 	$(MAKE) zrepl-bin GOOS=$(GOHOSTOS) GOARCH=$(GOHOSTARCH)
+-	artifacts/zrepl-$(GOHOSTOS)-$(GOHOSTARCH) gencompletion bash "$@"
++	artifacts/zrepl gencompletion bash "$@"
+ 
+ $(ARTIFACTDIR)/_zrepl.zsh_completion:
+ 	$(MAKE) zrepl-bin GOOS=$(GOHOSTOS) GOARCH=$(GOHOSTARCH)
+-	artifacts/zrepl-$(GOHOSTOS)-$(GOHOSTARCH) gencompletion zsh "$@"
++	artifacts/zrepl gencompletion zsh "$@"
+ 
+ $(ARTIFACTDIR)/go_env.txt:
+ 	$(GO_ENV_VARS) $(GO) env > $@
