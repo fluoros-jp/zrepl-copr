@@ -8,6 +8,10 @@ The build is available at https://copr.fedorainfracloud.org/coprs/fluoros/zrepl/
     `dnf copr enable fluoros/zrepl`
 2. Install the package  
     `dnf install zrepl`
+3. Edit setting file  
+    `vi /etc/zrepl/zrepl.yml`
+4. Enable and start zrepl  
+    `systemctl enable --now zrepl`
 
 
 # このリポジトリについて
@@ -20,3 +24,7 @@ The build is available at https://copr.fedorainfracloud.org/coprs/fluoros/zrepl/
     `dnf copr enable fluoros/zrepl`
 2. パッケージをインストールする  
     `dnf install zrepl`
+3. 設定ファイルを編集する  
+    `vi /etc/zrepl/zrepl.yml`
+4. zreplを有効化・起動する  
+    `systemctl enable --now zrepl`
