@@ -1,5 +1,5 @@
 # Global meta data
-Version:          0.9.10
+Version:          0.9.11
 %global common_description %{expand:
 zrepl is a one-stop, integrated solution for ZFS replication.}
 
@@ -8,7 +8,7 @@ Release:          1%{?dist}
 Summary:          One-stop, integrated solution for ZFS replication
 License:          MIT
 URL:              https://github.com/dsh2dsh/zrepl
-Source:	          https://github.com/dsh2dsh/zrepl/releases/download/v0.9.10/zrepl-0.9.10.tar.gz
+Source:	          https://github.com/dsh2dsh/zrepl/releases/download/v0.9.11/zrepl-0.9.11.tar.gz
 Patch0:           fix-Makefile.patch
 BuildRequires:    systemd, golang >= 1.24, git, wget, make
 Requires(post):   systemd
@@ -67,5 +67,5 @@ rm -rf %{buildroot}
 %{_datadir}/bash-completion/completions/zrepl
 
 %changelog
-* Sat May 3 2025 Fluoros <fluoros@fluoroserve.jp> 0.9.10-1
-- Initial release of zrepl v0.9.10
+* Sat Aug 2 2025 Fluoros <fluoros@fluoroserve.jp> 0.9.11-1
+- Initial release of zrepl v0.9.11
