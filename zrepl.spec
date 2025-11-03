@@ -1,5 +1,5 @@
 # Global meta data
-Version:          0.9.11
+Version:          1.0.0
 %global common_description %{expand:
 zrepl is a one-stop, integrated solution for ZFS replication.}
 
@@ -8,9 +8,8 @@ Release:          1%{?dist}
 Summary:          One-stop, integrated solution for ZFS replication
 License:          MIT
 URL:              https://github.com/dsh2dsh/zrepl
-Source:	          https://github.com/dsh2dsh/zrepl/releases/download/v0.9.11/zrepl-0.9.11.tar.gz
-Patch0:           fix-Makefile.patch
-BuildRequires:    systemd, golang >= 1.24, git, wget, make
+Source:		  https://github.com/dsh2dsh/zrepl/releases/download/v1.0.0/zrepl_1.0.0_linux_amd64.tar.gz
+BuildRequires:    systemd, git, wget, make
 Requires(post):   systemd
 Requires(preun):  systemd
 Requires(postun): systemd
@@ -25,7 +24,12 @@ rm -rf %{buildroot}
 %autosetup -c
 
 %build
-ZREPL_VERSION=%{version} make zrepl-bin noarch
+mkdir artifacts
+mv zrepl artifacts/zrepl
+
+# Generate complation for bash and zsh
+artifacts/zrepl gencompletion bash "artifacts/bash_completion"
+artifacts/zrepl gencompletion zsh "artifacts/_zrepl.zsh_completion"
 
 # Correct the path in the systemd unit file
 sed s:/usr/local/bin/:%{_bindir}/:g dist/systemd/zrepl.service > artifacts/zrepl.service
@@ -67,5 +71,5 @@ rm -rf %{buildroot}
 %{_datadir}/bash-completion/completions/zrepl
 
 %changelog
-* Sat Aug 2 2025 Fluoros <fluoros@fluoroserve.jp> 0.9.11-1
-- Initial release of zrepl v0.9.11
+* Mon Nov 3 2025 Fluoros <fluoros@fluoroserve.jp> 1.0.0-1
+- Initial release of zrepl v1.0.0
